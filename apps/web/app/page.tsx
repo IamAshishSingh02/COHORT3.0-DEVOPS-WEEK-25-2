@@ -5,8 +5,9 @@ const home = async () => {
 
   return (
     <div>
-      {user?.name}
-      {user?.name}
+      name: {user?.name}
+      <br />
+      email: {user?.email}
     </div>
   )
 }
