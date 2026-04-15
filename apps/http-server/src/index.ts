@@ -12,7 +12,7 @@ app.use(express.json());
 app.get("/health", (req, res) => {
   res.status(200).json({ 
     status: "ok",
-    message: "App is healthy!", 
+    message: "App is fucking healthy!", 
   });
 });
 
