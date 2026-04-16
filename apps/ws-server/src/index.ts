@@ -1,18 +1,24 @@
 import dotenv from "dotenv";
-import path from "path";
+import path from "node:path";
 
-dotenv.config({ path: path.resolve(process.cwd(), "../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 import { WebSocketServer } from "ws";
 import { prisma } from "@repo/db";
 
-const PORT = parseInt(process.env.WS_PORT || "3001", 10);
+const PORT = parseInt(process.env.WS_PORT || process.env.PORT || "3001", 10);
 const wss = new WebSocketServer({ port: PORT });
 
 wss.on("connection", async (socket) => {
   try {
-    await prisma.user.create({
-      data: {
+    await prisma.user.upsert({
+      where: {
+        email: "psssasds212004@gmail.com",
+      },
+      update: {
+        name: "Ashish Singh",
+      },
+      create: {
         name: "Ashish Singh",
         email: "psssasds212004@gmail.com",
       },

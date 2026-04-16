@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
-import path from "path";
+import path from "node:path";
 
-dotenv.config({ path: path.resolve(process.cwd(), "../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 import { prisma } from "@repo/db";
 import express from "express";
@@ -34,7 +34,7 @@ app.post("/signup", async (req, res) => {
   });
 });
 
-const PORT = parseInt(process.env.PORT || "3000", 10);
+const PORT = parseInt(process.env.PORT || process.env.HTTP_PORT || "3000", 10);
 
 const server = app.listen(PORT, () => {
   console.log(`Http server running on http://localhost:${PORT}`);
