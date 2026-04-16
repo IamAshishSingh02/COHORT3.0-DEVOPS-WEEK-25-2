@@ -28,6 +28,5 @@ jobs:
             git pull
             pnpm install
             pnpm run build
-            pm2 restart http-server
-            pm2 restart ws-server
-            pm2 restart next-js-fe
+            pm2 startOrRestart ecosystem.config.cjs --update-env
+            pm2 save
