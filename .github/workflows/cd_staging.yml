@@ -21,12 +21,14 @@ jobs:
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           port: 22
           script: |
+            set -e
             export NVM_DIR="/home/ubuntu/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
              
             cd COHORT3.0-DEVOPS-WEEK-25-2/ 
-            git pull
+            git pull --ff-only origin main
             pnpm install
             pnpm run build
-            pm2 startOrRestart ecosystem.config.cjs --update-env
+            test -f ecosystem.config.js
+            pm2 startOrRestart "$(pwd)/ecosystem.config.js" --update-env
             pm2 save
