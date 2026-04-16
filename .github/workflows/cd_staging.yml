@@ -26,8 +26,12 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
              
             cd COHORT3.0-DEVOPS-WEEK-25-2/ 
-            git pull --ff-only origin main
-            pnpm install
+            git fetch origin main
+            if [ -n "$(git status --porcelain)" ]; then
+              git stash push --include-untracked -m "pre-deploy-$(date -u +%Y%m%dT%H%M%SZ)"
+            fi
+            git reset --hard origin/main
+            pnpm install --frozen-lockfile
             pnpm run build
             test -f ecosystem.config.js
             pm2 startOrRestart "$(pwd)/ecosystem.config.js" --update-env
